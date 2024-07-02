@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/components/ui/use-toast";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 const Index = () => {
   const { toast } = useToast();
+  const [boatLength, setBoatLength] = useState("");
+  const [hullType, setHullType] = useState("");
 
   const handlePredict = () => {
     toast({
       title: "Prediction",
-      description: "Boat speed prediction feature coming soon!",
+      description: `Boat speed prediction feature coming soon! Boat Length: ${boatLength}, Hull Type: ${hullType}`,
     });
   };
 
@@ -22,7 +25,21 @@ const Index = () => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <Input placeholder="Enter boat parameters" />
+            <Input 
+              placeholder="Enter boat length (meters)" 
+              value={boatLength} 
+              onChange={(e) => setBoatLength(e.target.value)} 
+            />
+            <Select onValueChange={setHullType}>
+              <SelectTrigger className="w-full">
+                <SelectValue placeholder="Select hull type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="displacement">Displacement</SelectItem>
+                <SelectItem value="semi-planning">Semi-Planning</SelectItem>
+                <SelectItem value="planning">Planning</SelectItem>
+              </SelectContent>
+            </Select>
             <Button className="w-full" onClick={handlePredict}>
               Predict Speed
             </Button>
